@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.baizhi.mapper.AlbumMapper">
+
+
+    <resultMap id="selfselectAll" type="Album">
+        <result column="id" property="id"/>
+        <result column="title" property="title"/>
+        <result column="amount" property="amount"/>
+        <result column="img_path" property="imgPath"/>
+        <result column="score" property="score"/>
+        <result column="author" property="author"/>
+        <result column="boardcast" property="boardcast"/>
+        <result column="publish_date" property="publishDate"/>
+        <result column="brief" property="brief"/>
+        <collection property="children" ofType="Chapter">
+            <result column="bid" property="id"/>
+            <result column="btitle" property="title"/>
+            <result column="bload_path" property="loadPath"/>
+            <result column="bsize" property="size"/>
+            <result column="bduration" property="duration"/>
+
+        </collection>
+    </resultMap>
+
+    <select id="selfSelectAll" resultMap="selfselectAll">
+        SELECT t1.*,t2.id bid,t2.title btitle,t2.load_path bload_path,t2.size bsize,t2.duration bduration
+        from album t1
+                 left join chapter t2
+                           on t1.id = t2.album_id
+
+    </select>
+
+
+</mapper>

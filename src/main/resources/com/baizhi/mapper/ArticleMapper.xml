@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.baizhi.mapper.ArticleMapper">
+
+
+    <resultMap id="selectByMaster" type="Article">
+        <result column="id" property="id"/>
+        <result column="title" property="title"/>
+        <result column="img_path" property="imgPath"/>
+        <result column="content" property="content"/>
+        <result column="publish_date" property="publishDate"/>
+        <result column="status" property="status"/>
+        <result column="master_id" property="masterId"/>
+
+    </resultMap>
+
+    <select id="selectByMaster" resultMap="selectByMaster">
+        SELECT *
+        FROM `article`
+        where master_id !=#{masterId};
+    </select>
+
+
+    <resultMap id="detailArticle" type="Article">
+        <result column="id" property="id"/>
+        <result column="title" property="title"/>
+        <result column="img_path" property="imgPath"/>
+        <result column="content" property="content"/>
+        <result column="publish_date" property="publishDate"/>
+        <result column="status" property="status"/>
+        <result column="master_id" property="masterId"/>
+        <result column="head_img" property="headImg"/>
+
+    </resultMap>
+    <select id="detailArticle" resultMap="detailArticle">
+        select t1.*,t2.head_img
+        from article t1
+                 left join `master` t2
+                           on t1.master_id = t2.id
+        where t1.status = 0
+          and t1.id = #{id}
+    </select>
+
+</mapper>
