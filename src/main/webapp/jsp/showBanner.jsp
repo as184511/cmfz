@@ -40,12 +40,6 @@
             }
         }, '-', {
             iconCls: 'icon-save',
-            text: '保存',
-            handler: function () {
-                $('#dg_banner').edatagrid('saveRow');
-            }
-        }, '-', {
-            iconCls: 'icon-save',
             text: '导出报表',
             handler: function () {
                 location.href = "${pageContext.request.contextPath}/banner/exportExcel"
@@ -55,7 +49,7 @@
 
         $('#dg_banner').edatagrid({
             url: '${pageContext.request.contextPath}/banner/selectAll',
-            saveUrl: '${pageContext.request.contextPath}/banner/update',
+            <%--saveUrl: '${pageContext.request.contextPath}/banner/update',--%>
             destroyUrl: '${pageContext.request.contextPath}/banner/delete',
             fit: true,
             fitColumns: true,
@@ -64,15 +58,11 @@
             pageList: [3, 6, 9],
             columns: [[
                 {
-                    field: 'title', title: '标题', width: 100, editor: {
-                        type: 'text',
-                        options: {required: true}
-                    }
+                    field: 'title', title: '标题', width: 100
                 },
                 {
                     field: 'status', title: '状态', width: 100, editor: {
-                        type: 'text',
-                        options: {required: true}
+
                     },
                     formatter: function (value, rowData, rowIndex) {
                         if (value == 0) {
@@ -118,7 +108,7 @@
 
     /*修改*/
 
-    function addBanner() {
+    function updateBanner() {
         $('#update').form('submit', {
             url: '${pageContext.request.contextPath}' + '/banner/update',
             onSubmit: function () {
@@ -166,7 +156,7 @@
             buttons:[{
 				text:'保存',
 				handler:function(){
-				    addBanner();
+				    updateBanner();
 				    $('#update_banner').dialog('close');
 				}
 			},{
